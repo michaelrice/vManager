@@ -5,6 +5,7 @@ import com.vmware.vim25.*
 
 import com.toastcoders.VmOpsTools.vmware.Client
 import com.vmware.vim25.mo.util.PropertyCollectorUtil
+import grails.plugin.springsecurity.annotation.Secured
 import org.grails.jaxrs.provider.DomainObjectNotFoundException
 
 class VcenterActionsService {
@@ -83,11 +84,11 @@ class VcenterActionsService {
      * @param deviceId
      * @return
      */
-    def getVirtualMachines(String deviceId) {
+    public List<Map<String,String>> getVirtualMachines(String deviceId) {
         String vcuser = grailsApplication.config.vcenter.admin_user
         String vcpass = grailsApplication.config.vcenter.admin_pass
         Vcenter vcenter = Vcenter.findById(Long.decode(deviceId))
-        if(!vcenter) {
+        if (!vcenter) {
             throw new DomainObjectNotFoundException(Vcenter,deviceId)
         }
         String vcip = vcenter.ip
@@ -111,9 +112,9 @@ class VcenterActionsService {
         pfSpec[0].setObjectSet(oo)
         PropertySpec[] pp = [vmSpec]
         pfSpec[0].setPropSet(pp)
-        def newResult = []
-        def tMap = [:]
-        def result = (List) vsclient.serviceInstance.getServerConnection().getVimService().retrieveProperties(pcMOR, pfSpec)
+        List newResult = []
+        Map tMap = [:]
+        List<ObjectContent> result = (List) vsclient.serviceInstance.getServerConnection().getVimService().retrieveProperties(pcMOR, pfSpec)
         //clean up the result a bit to make it more reader friendly
         result.each { device ->
             device.propSet.each { property ->

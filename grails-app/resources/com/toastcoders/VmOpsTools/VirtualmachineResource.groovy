@@ -27,7 +27,7 @@ import org.grails.jaxrs.provider.DomainObjectNotFoundException
 @Produces(['application/json'])
 class VirtualmachineResource {
 
-    def virtualmachineResourceService
+    VirtualmachineResourceService virtualmachineResourceService
 
     @POST
     @ApiOperation(value="Create",notes="Create new Virtualmachine object")

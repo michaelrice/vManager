@@ -19,8 +19,8 @@ import com.wordnik.swagger.annotations.*
 @Consumes('application/json')
 class VcenterResource {
 
-    def vcenterService
-    def vcenterActionsService
+    VcenterService vcenterService
+    VcenterActionsService vcenterActionsService
 
     @GET
     @ApiOperation(value="Get All Vcenters",notes="This will return a list of all vCenters.")
@@ -52,7 +52,7 @@ class VcenterResource {
     @POST
     @ApiOperation(value="Create New vCenter",notes="Adds a new vCenter",tags="these are tags")
     Response createVcenter(@ApiParam(name="Vcenter",value="this is the value") Vcenter vcenter) {
-        created vcenterService.createVcenter(vcenter)
+        created vcenterService.create(vcenter)
     }
 
     @DELETE

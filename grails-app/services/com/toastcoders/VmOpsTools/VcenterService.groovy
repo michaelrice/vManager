@@ -1,11 +1,10 @@
 package com.toastcoders.VmOpsTools
 
-import org.codehaus.groovy.grails.exceptions.GrailsDomainException
 import org.grails.jaxrs.provider.DomainObjectNotFoundException
 
 class VcenterService {
 
-    def getAllVcenters() {
+    public List<Vcenter> getAllVcenters() {
         return Vcenter.findAll()
     }
 
@@ -13,19 +12,18 @@ class VcenterService {
         vc.save(flush: true)
     }
 
-    def getVcenterByDeviceNumber(String deviceId) {
+    public Vcenter getVcenterByDeviceNumber(String deviceId) throws DomainObjectNotFoundException {
         deviceId = deviceId as int
-        def device = Device.findById(deviceId)
-        if(!device) {
+        Device device = Device.findById(deviceId)
+        if (!device) {
             throw new DomainObjectNotFoundException(Device.class, deviceId)
         }
-        def vcenter
         // check if this is a hostsystem, if so no need to look further
         if(device instanceof com.toastcoders.VmOpsTools.Hostsystem) {
             return device.vcenter
         }
         // check if a vm, if so grab the host then the vcenter
-        if(device instanceof com.toastcoders.VmOpsTools.Virtualmachine) {
+        if (device instanceof com.toastcoders.VmOpsTools.Virtualmachine) {
             return device.hostsystem.vcenter
         }
         // need a Hostsystem or a Virtualmachine to find a vcenter
@@ -37,13 +35,13 @@ class VcenterService {
         if (!obj) {
             throw new DomainObjectNotFoundException(Vcenter.class, vc.id)
         }
-        obj.properties = dto.properties
-        obj
+        obj.properties = vc.properties
+        obj.save(flush: true)
     }
 
     void delete(def id) {
-        def obj = Vcenter.get(id)
-        if(obj){
+        Vcenter obj = Vcenter.get(id)
+        if (obj) {
             obj.delete()
         }
     }

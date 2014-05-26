@@ -10,12 +10,12 @@ class AccountService {
      * @param accountNumber
      * @return
      */
-    def devicesByAccount(def accountNumber) {
+    public List<Device> devicesByAccount(def accountNumber) {
         Account account = Account.findById(accountNumber)
         if(!account) {
             throw new DomainObjectNotFoundException(Account, accountNumber)
         }
-        def devices = Device.findAllByAccount(account)
+        List<Device> devices = Device.findAllByAccount(account)
         if(!devices) {
             throw new DomainObjectNotFoundException(Device,accountNumber)
         }
@@ -28,12 +28,12 @@ class AccountService {
      * @param accountNumber
      * @return HashMap
      */
-    def getVcenterByAccount(def accountNumber) {
-        def devices = devicesByAccount(accountNumber)
-        def vcenter
-        def retMap  = [:]
+    public Map getVcenterByAccount(def accountNumber) {
+        List<Device> devices = devicesByAccount(accountNumber)
+        Vcenter vcenter
+        Map retMap  = [:]
         devices.each{ device ->
-            if(device instanceof com.toastcoders.VmOpsTools.Hostsystem) {
+            if (device instanceof com.toastcoders.VmOpsTools.Hostsystem) {
                 vcenter = device.vcenter
                 retMap.put("name",vcenter.name)
                 retMap.put("ip",vcenter.ip)

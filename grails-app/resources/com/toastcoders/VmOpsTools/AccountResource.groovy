@@ -12,7 +12,7 @@ import static org.grails.jaxrs.response.Responses.*
 @Produces('application/json')
 class AccountResource {
 
-    def accountService
+    AccountService accountService
 
     @GET
     @Path('{accountNumber}/devices')
