@@ -18,7 +18,6 @@ grails.project.dependency.resolution = {
     checksums true // Whether to verify checksums on resolve
 
     repositories {
-        inherits true // Whether to inherit repository definitions from plugins
 
         grailsPlugins()
         grailsHome()
@@ -45,15 +44,8 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.11.0.2"
         runtime ":resources:1.2.7"
         compile ":scaffolding:2.0.3"
-        // Uncomment these (or add new ones) to enable additional resources capabilities
-        //runtime ":zipped-resources:1.0"
-        //runtime ":cached-resources:1.0"
-        //runtime ":yui-minify-resources:0.1.4"
-
         build ":tomcat:7.0.52.1"
-
         runtime ":database-migration:1.1"
-
         compile ':cache:1.0.0'
         compile ":spring-security-core:2.0-RC3"
         compile ":spring-security-ui:1.0-RC2"

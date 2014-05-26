@@ -123,8 +123,6 @@ vcenter {
     licenseUrl = "http://opensource.org/licenses/MIT"
     scan = true
 }
-// Uncomment and edit the following lines to start using Grails encoding & escaping improvements
-
 // GSP settings
 grails {
     views {
